@@ -1,0 +1,24 @@
+/* Card.css */
+
+.card {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 16px;
+	margin: 16px;
+	max-width: 300px;
+}
+
+.image-container img {
+	max-width: 100%; /* La imagen se ajustará al ancho del contenedor */
+	height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+}
+
+.card p {
+	margin: 8px 0;
+}
+
+.card p:first-child {
+	font-weight: bold;
+}
