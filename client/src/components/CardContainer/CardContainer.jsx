@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Card/Card';
+import { Link } from 'react-router-dom'; // Importa Link desde react-router-dom
 import './CardContainer.css';
 
 const CardContainer = ({ searchResults, selectedGenre }) => {
@@ -19,12 +20,15 @@ const CardContainer = ({ searchResults, selectedGenre }) => {
 	return (
 		<div className='card-container'>
 			{filteredGames.map((result) => (
-				<Card
-					key={result.id}
-					background_image={result.background_image}
-					name={result.name}
-					genres={result.genres ? result.genres : []}
-				/>
+				<Link key={result.id} to={`/detail/${result.id}`}>
+					{/* Envuelve la Card con Link y pasa el id en la URL */}
+
+					<Card
+						background_image={result.background_image}
+						name={result.name}
+						genres={result.genres ? result.genres : []}
+					/>
+				</Link>
 			))}
 		</div>
 	);

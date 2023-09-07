@@ -66,7 +66,6 @@ const getVideogameByIdHandler = async (req, res) => {
 const getVideogamepostHandlers = async (req, res) => {
 	//Getting information from body
 	const {
-		id,
 		name,
 		description,
 		platforms,
@@ -79,7 +78,6 @@ const getVideogamepostHandlers = async (req, res) => {
 	try {
 		//Sending information to controller to create the game
 		const newGame = await createpostVideogames(
-			id,
 			name,
 			description,
 			platforms,

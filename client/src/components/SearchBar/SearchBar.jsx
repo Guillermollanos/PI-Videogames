@@ -13,7 +13,7 @@ const SearchBar = ({ onSearchResultsChange }) => {
 		try {
 			// Realiza una solicitud al backend para buscar videojuegos por nombre
 			const response = await axios.get(
-				`http://localhost:3001/videogames?name=${searchTerm}`
+				`http://localhost:3001/videogames/name?search=${searchTerm}`
 			);
 			console.log(response.data);
 

@@ -6,11 +6,24 @@ export const FILTER_CARDS = 'FILTER_CARDS';
 export const ORDER = 'ORDER';
 const URL = 'http://localhost:3001/videogames';
 
+// Define tu acción como una función asíncrona
 export const getUsers = () => {
 	return async function (dispatch) {
-		const apiData = await axios.get(URL);
-		const users = apiData.data;
-		dispatch({ type: GET_USERS, payload: users });
+		try {
+			// Intenta realizar la solicitud a la API
+			const apiData = await axios.get(URL);
+
+			// Si la solicitud es exitosa, obtén los usuarios y envíalos a tu store
+			const users = apiData.data;
+			dispatch({ type: GET_USERS, payload: users });
+		} catch (error) {
+			console.error('Error al obtener usuarios:', error);
+			// Si ocurre un error, puedes manejarlo aquí
+			alert('Error al obtener usuarios: ' + error.message);
+
+			// Puedes despachar una acción de error si lo deseas
+			// dispatch({ type: GET_USERS_ERROR, payload: error.message });
+		}
 	};
 };
 

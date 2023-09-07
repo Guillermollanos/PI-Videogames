@@ -15,8 +15,8 @@ const rootReducer = (state = initialState, action) => {
 
 		case FILTER_CARDS:
 			// Filtra los usuarios según el género y actualiza el estado
-			const filteredUsers = state.users.filter(
-				(user) => user.genre === action.payload
+			const filteredUsers = state.users.filter((user) =>
+				user.genres.includes(action.payload)
 			);
 			return {
 				...state,

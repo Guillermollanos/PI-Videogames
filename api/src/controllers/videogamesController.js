@@ -3,24 +3,14 @@ const axios = require('axios');
 require('dotenv').config();
 const { API_KEY } = process.env;
 const { Op } = require('sequelize');
+const {
+	transformApiData,
+	transformApiDataId,
+	transformDbData,
+	transformDbDataId,
+} = require('../../utils/transformData.js');
 
-const transformGameData = (data) => {
-	const { id, name, platforms, background_image, released, rating, genres } =
-		data;
-	console.log(genres);
-	const formattedPlatforms = platforms.map((plat) => plat.platform.name);
-	const formattedGenres = genres.map((gen) => gen.name);
-
-	return {
-		id,
-		name,
-		platforms: formattedPlatforms,
-		background_image,
-		released,
-		rating,
-		genres: formattedGenres,
-	};
-};
+// Funciones de transformación de datos
 
 const getApiVideogamesPaginated = async () => {
 	const apiVideogames = [];
@@ -32,7 +22,7 @@ const getApiVideogamesPaginated = async () => {
 			);
 
 			if (data.results && Array.isArray(data.results)) {
-				const games = data.results.map((game) => transformGameData(game));
+				const games = data.results.map((game) => transformApiData(game)); // Agrega el resultado de transformApiData(game)
 				apiVideogames.push(...games);
 			} else {
 				console.error('API response is not as expected:', data);
@@ -56,9 +46,7 @@ const getDbVideogames = async () => {
 		},
 	});
 
-	return dbVideogames.map((dbVideogame) => {
-		transformGameData(dbVideogame.dataValues);
-	});
+	return dbVideogames.map((dbVideogame) => transformApiData(dbVideogame));
 };
 
 const getApiVideogames = async () => {
@@ -66,7 +54,7 @@ const getApiVideogames = async () => {
 		`https://api.rawg.io/api/games?key=${API_KEY}`
 	);
 
-	return data.results.map((apiVideogame) => transformGameData(apiVideogame));
+	return data.results.map((apiVideogame) => transformApiData(apiVideogame));
 };
 
 const getDbVideogameByName = async (search) => {
@@ -84,7 +72,7 @@ const getDbVideogameByName = async (search) => {
 		{ limit: 15 }
 	);
 
-	return dbVideogames.map((dbVideogame) => transformGameData(dbVideogame));
+	return dbVideogames.map((dbVideogame) => transformDbData(dbVideogame));
 };
 
 const getApiVideogamesByName = async (search) => {
@@ -92,7 +80,7 @@ const getApiVideogamesByName = async (search) => {
 		`https://api.rawg.io/api/games?search=${search}&key=${API_KEY}`
 	);
 
-	return data.results.map((apiVideogame) => transformGameData(apiVideogame));
+	return data.results.map((apiVideogame) => transformApiData(apiVideogame));
 };
 
 const getVideogameById = async (idVideogame) => {
@@ -106,17 +94,16 @@ const getVideogameById = async (idVideogame) => {
 				},
 			},
 		});
-		return transformGameData(data);
+		return transformDbDataId(data);
 	} else {
 		const { data } = await axios.get(
 			`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`
 		);
-		return transformGameData(data);
+		return transformApiDataId(data);
 	}
 };
 
 const createpostVideogames = async (
-	id,
 	name,
 	description,
 	platforms,
@@ -127,7 +114,6 @@ const createpostVideogames = async (
 ) => {
 	console.log(genres);
 	const newGame = await Videogame.create({
-		id,
 		name,
 		description,
 		platforms,

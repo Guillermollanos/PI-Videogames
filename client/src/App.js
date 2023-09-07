@@ -13,7 +13,7 @@ function App() {
 				<Route path='/home' element={<HomePage />} />
 				<Route exact path='/' element={<LandingPage />} />
 				<Route path='/create' element={<FormPage />} />
-				<Route path='/detail' element={<DetailPage />} />
+				<Route path='/detail/:id' element={<DetailPage />} />
 			</Routes>
 		</div>
 	);
