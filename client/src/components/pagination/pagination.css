@@ -1,0 +1,42 @@
+/* pagination.css */
+
+/* Contenedor principal */
+.pagination-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
+}
+
+/* Botones de paginación */
+.pagination-button {
+	background-color: #007bff; /* Color de fondo del botón */
+	color: #fff; /* Color del texto */
+	border: none;
+	border-radius: 4px;
+	padding: 8px 16px;
+	margin: 0 4px; /* Espacio entre los botones */
+	cursor: pointer;
+	transition: background-color 0.3s ease; /* Efecto de transición suave en el cambio de color de fondo */
+
+	/* Estilo cuando el botón está deshabilitado */
+	&:disabled {
+		background-color: #ccc;
+		cursor: not-allowed;
+	}
+
+	/* Estilo al pasar el cursor sobre el botón */
+	&:hover {
+		background-color: #0056b3;
+	}
+}
+
+/* Estilo para el botón "Prev" */
+.pagination-button.prev {
+	margin-right: 16px; /* Espacio adicional a la derecha del botón "Prev" */
+}
+
+/* Estilo para el botón "Next" */
+.pagination-button.next {
+	margin-left: 16px; /* Espacio adicional a la izquierda del botón "Next" */
+}
