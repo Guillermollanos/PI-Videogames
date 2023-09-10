@@ -1,6 +1,11 @@
 // reducer.js
 
-import { GET_USERS, FILTER_CARDS, ORDER } from './actions';
+import {
+	GET_USERS,
+	FILTER_CARDS,
+	ORDER_ALPHABETICAL,
+	ORDER_RATING,
+} from './actions';
 
 const initialState = {
 	users: [],
@@ -23,20 +28,30 @@ const rootReducer = (state = initialState, action) => {
 				filteredUsers,
 			};
 
-		case ORDER:
-			// Ordena los usuarios en función de la acción de orden
-			const sortedUsers = state.filteredUsers.slice(); // Clona los usuarios filtrados
+		case ORDER_ALPHABETICAL:
+			const alphabeticalUsers = state.filteredUsers.slice(); // Clona los usuarios filtrados
 
-			if (action.payload === 'asc') {
-				sortedUsers.sort((a, b) => (a.name > b.name ? 1 : -1));
-			} else if (action.payload === 'desc') {
-				sortedUsers.sort((a, b) => (a.name < b.name ? 1 : -1));
+			if (state.sortOrder === 'asc') {
+				alphabeticalUsers.sort((a, b) => (a.name > b.name ? 1 : -1)); // Ordena A-Z
+			} else {
+				alphabeticalUsers.sort((a, b) => (a.name < b.name ? 1 : -1)); // Ordena Z-A
 			}
 
 			return {
 				...state,
-				filteredUsers: sortedUsers,
-				sortOrder: action.payload,
+				filteredUsers: alphabeticalUsers,
+				sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc', // Invierte el orden
+			};
+
+		case ORDER_RATING:
+			const ratingUsers = state.filteredUsers.slice(); // Clona los usuarios filtrados
+
+			ratingUsers.sort((a, b) => (a.rating < b.rating ? 1 : -1)); // Ordena por rating (puedes ajustar la lógica según necesites)
+
+			return {
+				...state,
+				filteredUsers: ratingUsers,
+				sortOrder: 'desc', // Establece el orden descendente
 			};
 
 		default:

@@ -2,13 +2,30 @@ import React from 'react';
 import './Card.css';
 
 const Card = (props) => {
+	// Verifica si props.genres es una cadena
+	const genresString = Array.isArray(props.genres)
+		? props.genres.join(', ')
+		: props.genres;
+
+	// Divide la cadena de géneros en una matriz
+	const genresArray = genresString.split(',').map((genre) => genre.trim());
+
+	// Filtra los géneros para incluir solo el género seleccionado (props.selectedGenre)
+	const filteredGenres = genresArray.filter(
+		(genre) => genre === props.selectedGenre
+	);
+
+	// Si se encontró el género seleccionado, usa ese; de lo contrario, usa el primer género en la lista
+	const displayedGenre =
+		filteredGenres.length > 0 ? filteredGenres[0] : genresArray[0];
+
 	return (
 		<div className='card'>
 			<div className='image-container'>
 				<img src={props.background_image} alt={props.name} />
 			</div>
-			<p>Name: {props.name}</p>
-			<p>Genres: {props.genres}</p>
+			<p>{props.name}</p>
+			<p>{displayedGenre}</p>
 		</div>
 	);
 };

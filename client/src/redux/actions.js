@@ -3,7 +3,9 @@ import axios from 'axios';
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';
 export const FILTER_CARDS = 'FILTER_CARDS';
-export const ORDER = 'ORDER';
+
+export const ORDER_ALPHABETICAL = 'ORDER_ALPHABETICAL';
+export const ORDER_RATING = 'ORDER_RATING';
 const URL = 'http://localhost:3001/videogames';
 
 // Define tu acción como una función asíncrona
@@ -42,9 +44,14 @@ export const filterCards = (genre) => {
 	};
 };
 
-export const orderCards = (order) => {
+export const orderAlphabetical = () => {
 	return {
-		type: ORDER,
-		payload: order,
+		type: ORDER_ALPHABETICAL,
+	};
+};
+
+export const orderRating = () => {
+	return {
+		type: ORDER_RATING,
 	};
 };

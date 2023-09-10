@@ -57,6 +57,7 @@ const transformApiDataId = (data) => {
 };
 
 const transformDbData = (data) => {
+	console.log(data);
 	//Destructuring received data
 	let { id, name, platforms, background_image, released, rating, genres } =
 		data;
