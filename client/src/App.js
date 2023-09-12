@@ -10,8 +10,9 @@ function App() {
 		<div className='App'>
 			{location.pathname !== '/' && <NavBar />}
 			<Routes>
-				<Route path='/home' element={<HomePage />} />
 				<Route exact path='/' element={<LandingPage />} />
+				<Route path='/home' element={<HomePage />} />
+
 				<Route path='/create' element={<FormPage />} />
 				<Route path='/detail/:id' element={<DetailPage />} />
 			</Routes>

@@ -12,29 +12,6 @@ const {
 
 // Funciones de transformación de datos
 
-const getApiVideogamesPaginated = async () => {
-	const apiVideogames = [];
-
-	for (let i = 1; i <= 5; i++) {
-		try {
-			const { data } = await axios.get(
-				`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`
-			);
-
-			if (data.results && Array.isArray(data.results)) {
-				const games = data.results.map((game) => transformApiData(game)); // Agrega el resultado de transformApiData(game)
-				apiVideogames.push(...games);
-			} else {
-				console.error('API response is not as expected:', data);
-			}
-		} catch (error) {
-			console.error('Error making API request:', error);
-		}
-	}
-
-	return apiVideogames;
-};
-
 const getDbVideogames = async () => {
 	let dbVideogames = await Videogame.findAll({
 		include: {
@@ -46,15 +23,23 @@ const getDbVideogames = async () => {
 		},
 	});
 
-	return dbVideogames.map((dbVideogame) => transformApiData(dbVideogame));
+	return dbVideogames.map((dbVideogame) => transformDbData(dbVideogame));
 };
 
 const getApiVideogames = async () => {
-	const { data } = await axios.get(
-		`https://api.rawg.io/api/games?key=${API_KEY}`
-	);
-
-	return data.results.map((apiVideogame) => transformApiData(apiVideogame));
+	//Getting videogames from API (120 first results)
+	let results = [];
+	for (let i = 1; i <= 3; i++)
+		results = [
+			...results,
+			...(
+				await axios.get(
+					`https://api.rawg.io/api/games?page=${i}&page_size=40&key=${API_KEY}`
+				)
+			).data.results,
+		];
+	//Desctructuring and getting needed information and returning
+	return results.map((apiVideogame) => transformApiData(apiVideogame));
 };
 
 const getDbVideogameByName = async (search) => {
@@ -134,5 +119,4 @@ module.exports = {
 	getApiVideogamesByName,
 	getVideogameById,
 	createpostVideogames,
-	getApiVideogamesPaginated,
 };

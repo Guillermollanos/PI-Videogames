@@ -1,10 +1,10 @@
 const {
 	getDbVideogames,
+	getApiVideogames,
 	getDbVideogameByName,
 	getApiVideogamesByName,
 	getVideogameById,
 	createpostVideogames,
-	getApiVideogamesPaginated,
 } = require('../controllers/videogamesController');
 
 const getVideogamesHandler = async (req, res) => {
@@ -13,7 +13,7 @@ const getVideogamesHandler = async (req, res) => {
 		const dbVideogames = await getDbVideogames();
 
 		//Getting videogames from API
-		const apiVideogames = await getApiVideogamesPaginated();
+		const apiVideogames = await getApiVideogames();
 		console.log(apiVideogames.length);
 
 		//Joining information from database and API
