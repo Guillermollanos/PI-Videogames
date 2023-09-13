@@ -1,0 +1,70 @@
+/* FormPage.module.css */
+
+.form {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+
+	border-radius: 10px;
+	background-color: #f0f0f0;
+	border: 2px solid #999;
+	color: rgb(2, 2, 2);
+	font-family: 'Press Start 2P', cursive;
+}
+
+.form h2 {
+	text-align: center;
+}
+
+.input {
+	width: 100%;
+	padding: 8px;
+	border-radius: 4px;
+	border: 2px solid #a6a6a6;
+	color: #eee;
+	background: #333;
+	margin-bottom: 15px;
+}
+
+.button {
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background: #e62117;
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+
+.button:hover {
+	filter: brightness(1.2);
+}
+
+.platforms {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.platform {
+	background: #444;
+	padding: 4px 10px;
+	border-radius: 20px;
+	margin: 0 5px 10px 0;
+}
+
+.genre {
+	display: inline-block;
+	padding: 4px 8px;
+	border: 2px solid #a6a6a6;
+	border-radius: 4px;
+	margin: 4px;
+}
+
+.genre.selected {
+	background: #ff5400;
+	border-color: #ff5400;
+	color: white;
+}

@@ -5,7 +5,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CardContainer from '../../components/CardContainer/CardContainer';
 import FilterOptions from '../../components/FilterOptions/FilterOptions'; // Importa el componente FilterOptions
 
-import './HomePage.css';
+import styles from './HomePage.module.css';
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -22,13 +22,13 @@ const Home = () => {
 	};
 
 	return (
-		<>
+		<div className={styles['home-container']}>
 			<SearchBar onSearchResultsChange={handleSearchResultsChange} />
 			<FilterOptions /> {/* Renderiza el componente FilterOptions */}
 			<CardContainer
 				searchResults={searchResults.length > 0 ? searchResults : users}
 			/>
-		</>
+		</div>
 	);
 };
 

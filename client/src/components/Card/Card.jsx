@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import styles from './Card.module.css';
 
 const Card = (props) => {
 	// Verifica si props.genres es una cadena
@@ -20,12 +20,16 @@ const Card = (props) => {
 		filteredGenres.length > 0 ? filteredGenres[0] : genresArray[0];
 
 	return (
-		<div className='card'>
-			<div className='image-container'>
-				<img src={props.background_image} alt={props.name} />
+		<div className={styles.card}>
+			<div className={styles.cardImageContainer}>
+				<img
+					className={styles.cardImage}
+					src={props.background_image}
+					alt={props.name}
+				/>
 			</div>
-			<p>{props.name}</p>
-			<p>{displayedGenre}</p>
+			<h3 className={styles.cardTitle}>{props.name}</h3>
+			<p className={styles.cardPlatform}>{displayedGenre}</p>
 		</div>
 	);
 };

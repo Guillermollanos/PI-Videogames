@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Card from '../Card/Card';
 import { Link } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
-import './CardContainer.css';
+import styles from './CardContainer.module.css';
 
 const CardContainer = ({ searchResults, selectedGenre }) => {
 	const filteredGames = searchResults.filter((result) => {
@@ -29,9 +29,13 @@ const CardContainer = ({ searchResults, selectedGenre }) => {
 	);
 
 	return (
-		<div className='card-container'>
+		<div className={styles.container}>
 			{visibleCards.map((result) => (
-				<Link key={result.id} to={`/detail/${result.id}`}>
+				<Link
+					key={result.id}
+					to={`/detail/${result.id}`}
+					className={styles.cardLink}
+				>
 					<Card
 						background_image={result.background_image}
 						name={result.name}

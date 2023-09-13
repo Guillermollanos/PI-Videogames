@@ -1,18 +1,19 @@
-// LandingPage.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // Si estás usando React Router para la navegación
-import './LandingPage.css';
+import { Link } from 'react-router-dom';
+// LandingPage.jsx
+
+import styles from './LandingPage.module.css';
 
 const LandingPage = () => {
 	return (
-		<div className='landing-page'>
-			<div className='background-image'></div>
-			<div className='content'>
+		<div className={styles.landingPage}>
+			<div className={styles.backgroundImage}></div>
+
+			<div className={styles.content}>
 				<h1>Bienvenido a Henry Videogames</h1>
+
 				<Link to='/home'>
-					{' '}
-					{/* Asegúrate de que "/home" coincida con tu ruta real */}
-					<button>Ingresar</button>
+					<button className={styles.button}>Ingresar</button>
 				</Link>
 			</div>
 		</div>

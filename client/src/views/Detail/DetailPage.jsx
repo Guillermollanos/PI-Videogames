@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './DetailPage.css'; // Importa tu archivo CSS personalizado
+import styles from './DetailPage.module.css';
 
 const DetailPage = () => {
 	const { id } = useParams();
@@ -15,41 +15,43 @@ const DetailPage = () => {
 	}, [id]);
 
 	return (
-		<div className='detail-container'>
-			<div className='detail-title'>
-				<h1>{videogame.name}</h1>
-				<h4>ID {videogame.id}</h4>
+		<div className={styles.detail}>
+			<div className={styles.title}>
+				<h1 className={styles.titleText}>{videogame.name}</h1>
+				<h4 className={styles.titleId}>ID {videogame.id}</h4>
 			</div>
 			<div>
 				<img
-					className='detail-image'
+					className={styles.image}
 					src={videogame.background_image}
 					alt={videogame.name}
 				/>
-				<div className='detail-section'>
-					<h2>Platforms</h2>
-					<ul className='detail-list'>
-						{videogame.platforms?.map((platform, index) => (
-							<li key={index} className='detail-list-item'>
-								{platform}
-							</li>
-						))}
-					</ul>
+				<div className={styles.info}>
+					<h2 className={styles.sectionTitle}>Platforms</h2>
+					<div className={styles.platforms}>
+						<ul className={styles.list}>
+							{videogame.platforms?.map((platform, index) => (
+								<li key={index}>{platform}</li>
+							))}
+						</ul>
+					</div>
 					<p
-						className='detail-description'
+						className={styles.description}
 						dangerouslySetInnerHTML={{ __html: videogame.description }}
 					/>
 
-					<p>Released {videogame.released}</p>
-					<h2>Rating: {videogame.rating}</h2>
-					<h2>Genres</h2>
-					<ul className='detail-list'>
-						{videogame.genres?.map((genre, index) => (
-							<li key={index} className='detail-list-item'>
-								{genre}
-							</li>
-						))}
-					</ul>
+					<p className={styles.releaseDate}>Released {videogame.released}</p>
+					<h2 className={styles.rating}>Rating: {videogame.rating}</h2>
+					<h2 className={styles.sectionTitle}>Genres</h2>
+					<div className={styles.genres}>
+						<ul className={styles.list}>
+							{videogame.genres?.map((genre, index) => (
+								<li key={index} className={styles.listItem}>
+									{genre}
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

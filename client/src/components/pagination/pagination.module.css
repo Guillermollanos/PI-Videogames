@@ -1,0 +1,32 @@
+/* pagination.module.css */
+
+.pagination-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 16px;
+	margin-right: 50px;
+	margin: 0 auto; /* Agregar este estilo para centrar horizontalmente */
+}
+.pagination-button {
+	background-color: #e62117;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 8px 16px;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.pagination-button.prev {
+	margin-right: 10px;
+}
+
+.pagination-button.next {
+	margin-left: 10px;
+}
+
+.pagination-button.disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+}

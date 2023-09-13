@@ -1,7 +1,5 @@
 import React from 'react';
-import './pagination.css';
-
-// ...
+import styles from './pagination.module.css';
 
 function Pagination({ page, setPage, pagesArray, pagesNumber }) {
 	const handleClick = (event) => {
@@ -17,9 +15,9 @@ function Pagination({ page, setPage, pagesArray, pagesNumber }) {
 	};
 
 	return (
-		<div className='pagination-container'>
+		<div className={styles['pagination-container']}>
 			<button
-				className='pagination-button prev'
+				className={`${styles['pagination-button']} ${styles['prev']}`}
 				onClick={handleClick}
 				value='prev'
 				disabled={page <= 1}
@@ -28,7 +26,7 @@ function Pagination({ page, setPage, pagesArray, pagesNumber }) {
 			</button>
 			{pagesArray.map((p) => (
 				<button
-					className='pagination-button'
+					className={styles['pagination-button']}
 					onClick={handleClick}
 					value={p}
 					disabled={Number(page) === p}
@@ -38,7 +36,7 @@ function Pagination({ page, setPage, pagesArray, pagesNumber }) {
 				</button>
 			))}
 			<button
-				className='pagination-button next'
+				className={`${styles['pagination-button']} ${styles['next']}`}
 				onClick={handleClick}
 				value='next'
 				disabled={page >= pagesNumber}

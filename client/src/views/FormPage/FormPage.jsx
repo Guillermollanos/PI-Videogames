@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './FormPage.css';
+import styles from './FormPage.module.css';
 import { validation } from '../../utils/validation';
 
 const FormPage = () => {
@@ -12,6 +12,7 @@ const FormPage = () => {
 		released: '',
 		rating: '',
 		genres: [],
+		currentPlatform: '',
 	});
 
 	const [errors, setErrors] = useState({
@@ -24,11 +25,13 @@ const FormPage = () => {
 		genres: '',
 	});
 
+	const [apiGenres, setApiGenres] = useState([]);
+
 	useEffect(() => {
 		async function apiReq() {
 			try {
 				const { data } = await axios.get('http://localhost:3001/genres');
-				setForm({ ...form, apiGenres: data });
+				setApiGenres(data);
 			} catch (error) {
 				console.error(error);
 			}
@@ -144,10 +147,11 @@ const FormPage = () => {
 	};
 
 	return (
-		<form className='form-container' onSubmit={submitHandler}>
+		<form className={styles.form} onSubmit={submitHandler}>
 			<div>
 				<label htmlFor='name'>Name</label>
 				<input
+					className={styles.input}
 					type='text'
 					value={form.name}
 					onChange={changeHandler}
@@ -159,6 +163,7 @@ const FormPage = () => {
 			<div>
 				<label htmlFor='description'>Description</label>
 				<input
+					className={styles.input}
 					type='text'
 					value={form.description}
 					onChange={changeHandler}
@@ -170,12 +175,15 @@ const FormPage = () => {
 			<div>
 				<label htmlFor='currentPlatform'>Platforms:</label>
 				<input
+					className={styles.input}
 					type='text'
 					value={form.currentPlatform}
 					onChange={changeHandler}
 					name='currentPlatform'
 				/>
-				<button onClick={platformHandler}>Add</button>
+				<button className={styles.button} onClick={platformHandler}>
+					Add
+				</button>
 				<span>{errors.platforms}</span>
 			</div>
 
@@ -183,7 +191,12 @@ const FormPage = () => {
 				{form.platforms.map((platform) => (
 					<label key={platform}>
 						{platform}
-						<button key={platform} name={platform} onClick={platformHandler}>
+						<button
+							className={styles.button}
+							key={platform}
+							name={platform}
+							onClick={platformHandler}
+						>
 							x
 						</button>
 					</label>
@@ -193,6 +206,7 @@ const FormPage = () => {
 			<div>
 				<label htmlFor='background_image'>Image</label>
 				<input
+					className={styles.input}
 					type='text'
 					value={form.background_image}
 					onChange={changeHandler}
@@ -204,6 +218,7 @@ const FormPage = () => {
 			<div>
 				<label htmlFor='released'>Released</label>
 				<input
+					className={styles.input}
 					type='date'
 					value={form.released}
 					onChange={changeHandler}
@@ -216,6 +231,7 @@ const FormPage = () => {
 			<div>
 				<label htmlFor='rating'>Rating</label>
 				<input
+					className={styles.input}
 					type='number'
 					value={form.rating}
 					onChange={changeHandler}
@@ -231,22 +247,23 @@ const FormPage = () => {
 			</div>
 
 			<div className='genresContainer'>
-				{form.apiGenres &&
-					form.apiGenres.map((genre) => (
-						<label key={genre.id}>
-							<input
-								key={genre.id}
-								type='checkbox'
-								id={genre.id}
-								name={genre.name}
-								onChange={genreHandler}
-							/>
-							{genre.name}
-						</label>
-					))}
+				{apiGenres.map((genre) => (
+					<label key={genre.id}>
+						<input
+							key={genre.id}
+							type='checkbox'
+							id={genre.id}
+							name={genre.name}
+							onChange={genreHandler}
+						/>
+						{genre.name}
+					</label>
+				))}
 			</div>
 
-			<button type='submit'>Create</button>
+			<button className={styles.button} type='submit'>
+				Create
+			</button>
 		</form>
 	);
 };

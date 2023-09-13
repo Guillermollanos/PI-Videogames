@@ -27,7 +27,8 @@ export const validation = (form) => {
 	else if (!dateRegex.test(form.released))
 		errors.released = 'Formato de fecha inválido';
 
-	if (!form.rating) errors.rating = 'La calificación no puede estar vacía';
+	if (isNaN(form.rating) || form.rating < 0 || form.rating > 5)
+		errors.rating = 'El rating debe ser un número entre 0 y 5';
 
 	if (form.genres.length === 0)
 		errors.genres = 'Debe haber al menos 1 género seleccionado';

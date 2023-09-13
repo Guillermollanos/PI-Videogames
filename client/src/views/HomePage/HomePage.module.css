@@ -1,0 +1,9 @@
+/* Home.module.css */
+
+.home-container {
+	max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
+	margin: 0 auto; /* Centra el contenido horizontalmente */
+	padding: 16px; /* Agrega relleno para espaciar el contenido de los lados */
+}
+
+/* Otros estilos para ajustar el diseño de las tarjetas según tus preferencias */

@@ -1,0 +1,27 @@
+/* FilterOptions.module.css */
+
+.filterOptions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: #f0f0f0;
+	border: 2px solid #999;
+	border-radius: 10px;
+	margin-bottom: 16px;
+}
+
+.filterButton {
+	background-color: #e62117;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.filterButton:hover {
+	background-color: #e62117;
+}
