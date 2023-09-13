@@ -4,8 +4,7 @@ import {
 	filterCards,
 	orderAlphabetical,
 	orderRating,
-	filterApiGames, // Nueva acción para filtrar juegos de la API
-	filterFormGames, // Nueva acción para filtrar juegos creados a través del formulario
+	filteredBySource, // Nueva acción para filtrar juegos de la API
 } from '../../redux/actions';
 import styles from './FilterOptions.module.css'; // Importa el archivo CSS Modules
 
@@ -26,14 +25,10 @@ const FilterOptions = () => {
 		dispatch(orderRating());
 	};
 
-	// Nuevo manejador para filtrar juegos de la API
-	const handleApiGamesFilter = () => {
-		dispatch(filterApiGames());
-	};
-
 	// Nuevo manejador para filtrar juegos creados a través del formulario
-	const handleFormGamesFilter = () => {
-		dispatch(filterFormGames());
+	const handleFilterBySource = (event) => {
+		dispatch(filteredBySource(event.target.value));
+		console.log(event.target.value); // Pasar el valor seleccionado
 	};
 
 	const genres = ['Action', 'Adventure', 'RPG', 'Shooter'];
@@ -61,20 +56,16 @@ const FilterOptions = () => {
 			>
 				Ordenar por Rating
 			</button>
-			{/* Nuevo botón para filtrar juegos de la API */}
-			<button
-				className={styles.filterButton}
-				onClick={() => handleApiGamesFilter()}
-			>
-				Filtrar por Juegos de API
-			</button>
+
 			{/* Nuevo botón para filtrar juegos creados a través del formulario */}
-			<button
+			<select
 				className={styles.filterButton}
-				onClick={() => handleFormGamesFilter()}
+				onChange={(event) => handleFilterBySource(event)}
 			>
-				Filtrar por Juegos Creados (Formulario)
-			</button>
+				<option value='all'>Show All</option>
+				<option value='API videogames'>API Videogames</option>
+				<option value='Created videogames'>Created Videogames</option>
+			</select>
 		</div>
 	);
 };

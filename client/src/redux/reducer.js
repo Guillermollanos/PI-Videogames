@@ -3,8 +3,7 @@ import {
 	FILTER_CARDS,
 	ORDER_ALPHABETICAL,
 	ORDER_RATING,
-	FILTER_API_GAMES, // Importa la nueva acción de filtrado de la API
-	FILTER_FORM_GAMES, // Importa la nueva acción de filtrado de juegos del formulario
+	FILTER_BY_SOURCE, // Importa la nueva acción de filtrado
 } from './actions';
 
 const initialState = {
@@ -12,6 +11,8 @@ const initialState = {
 	filteredUsers: [],
 	sortOrder: 'asc',
 	filterOrigin: '', // Agrega un estado para el filtro de origen
+	videogames: [], // Agrega un estado para los videojuegos con un valor inicial vacío
+	filtersApplied: [], // Asegúrate de tener este estado si lo estás usando en otro lugar
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -56,22 +57,19 @@ const rootReducer = (state = initialState, action) => {
 				sortOrder: 'desc',
 			};
 
-		case FILTER_API_GAMES: // Reducer para filtrar juegos de la API
-			const apiGames = state.users.filter((user) => user.origin === 'API');
+		case FILTER_BY_SOURCE:
+			const orderBySource = [...state.users];
+			console.log(orderBySource);
+			const filteredBySource =
+				action.payload === 'Created videogames'
+					? orderBySource.filter((user) => user.origin === true)
+					: action.payload === 'API videogames'
+					? orderBySource.filter((user) => user.origin === false)
+					: orderBySource;
 			return {
 				...state,
-				filteredUsers: apiGames,
-				filterOrigin: 'API', // Establece el filtro de origen en 'API'
-			};
-
-		case FILTER_FORM_GAMES: // Reducer para filtrar juegos creados a través del formulario
-			const formGames = state.users.filter(
-				(user) => user.origin === 'Formulario'
-			);
-			return {
-				...state,
-				filteredUsers: formGames,
-				filterOrigin: 'Formulario', // Establece el filtro de origen en 'Formulario'
+				videogames: filteredBySource,
+				filtersApplied: action.payload === 'all' ? [] : [action.payload],
 			};
 
 		default:

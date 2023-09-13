@@ -3,8 +3,7 @@ import axios from 'axios';
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';
 export const FILTER_CARDS = 'FILTER_CARDS';
-export const FILTER_API_GAMES = 'FILTER_API_GAMES'; // Nueva acción para filtrar juegos de la API
-export const FILTER_FORM_GAMES = 'FILTER_FORM_GAMES'; // Nueva acción para filtrar juegos creados a través del formulario
+export const FILTER_BY_SOURCE = 'FILTER_BY_SOURCE'; // Nueva acción para filtrar juegos de la API
 
 export const ORDER_ALPHABETICAL = 'ORDER_ALPHABETICAL';
 export const ORDER_RATING = 'ORDER_RATING';
@@ -58,15 +57,9 @@ export const orderRating = () => {
 	};
 };
 // Nueva acción para filtrar juegos de la API
-export const filterApiGames = () => {
+export const filteredBySource = (source) => {
 	return {
-		type: FILTER_API_GAMES,
-	};
-};
-
-// Nueva acción para filtrar juegos creados a través del formulario
-export const filterFormGames = () => {
-	return {
-		type: FILTER_FORM_GAMES,
+		type: FILTER_BY_SOURCE,
+		payload: source,
 	};
 };
