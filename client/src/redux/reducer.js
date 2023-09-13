@@ -1,16 +1,17 @@
-// reducer.js
-
 import {
 	GET_USERS,
 	FILTER_CARDS,
 	ORDER_ALPHABETICAL,
 	ORDER_RATING,
+	FILTER_API_GAMES, // Importa la nueva acción de filtrado de la API
+	FILTER_FORM_GAMES, // Importa la nueva acción de filtrado de juegos del formulario
 } from './actions';
 
 const initialState = {
 	users: [],
-	filteredUsers: [], // Nuevo estado para almacenar los usuarios filtrados
-	sortOrder: 'asc', // Puedes establecer un valor predeterminado para el orden
+	filteredUsers: [],
+	sortOrder: 'asc',
+	filterOrigin: '', // Agrega un estado para el filtro de origen
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -19,9 +20,10 @@ const rootReducer = (state = initialState, action) => {
 			return { ...state, users: action.payload, filteredUsers: action.payload };
 
 		case FILTER_CARDS:
-			// Filtra los usuarios según el género y actualiza el estado
-			const filteredUsers = state.users.filter((user) =>
-				user.genres.includes(action.payload)
+			const filteredUsers = state.users.filter(
+				(user) =>
+					user.genres.includes(action.payload) &&
+					(state.filterOrigin === '' || user.origin === state.filterOrigin)
 			);
 			return {
 				...state,
@@ -29,29 +31,47 @@ const rootReducer = (state = initialState, action) => {
 			};
 
 		case ORDER_ALPHABETICAL:
-			const alphabeticalUsers = state.filteredUsers.slice(); // Clona los usuarios filtrados
+			const alphabeticalUsers = state.filteredUsers.slice();
 
 			if (state.sortOrder === 'asc') {
-				alphabeticalUsers.sort((a, b) => (a.name > b.name ? 1 : -1)); // Ordena A-Z
+				alphabeticalUsers.sort((a, b) => (a.name > b.name ? 1 : -1));
 			} else {
-				alphabeticalUsers.sort((a, b) => (a.name < b.name ? 1 : -1)); // Ordena Z-A
+				alphabeticalUsers.sort((a, b) => (a.name < b.name ? 1 : -1));
 			}
 
 			return {
 				...state,
 				filteredUsers: alphabeticalUsers,
-				sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc', // Invierte el orden
+				sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc',
 			};
 
 		case ORDER_RATING:
-			const ratingUsers = state.filteredUsers.slice(); // Clona los usuarios filtrados
+			const ratingUsers = state.filteredUsers.slice();
 
-			ratingUsers.sort((a, b) => (a.rating < b.rating ? 1 : -1)); // Ordena por rating (puedes ajustar la lógica según necesites)
+			ratingUsers.sort((a, b) => (a.rating < b.rating ? 1 : -1));
 
 			return {
 				...state,
 				filteredUsers: ratingUsers,
-				sortOrder: 'desc', // Establece el orden descendente
+				sortOrder: 'desc',
+			};
+
+		case FILTER_API_GAMES: // Reducer para filtrar juegos de la API
+			const apiGames = state.users.filter((user) => user.origin === 'API');
+			return {
+				...state,
+				filteredUsers: apiGames,
+				filterOrigin: 'API', // Establece el filtro de origen en 'API'
+			};
+
+		case FILTER_FORM_GAMES: // Reducer para filtrar juegos creados a través del formulario
+			const formGames = state.users.filter(
+				(user) => user.origin === 'Formulario'
+			);
+			return {
+				...state,
+				filteredUsers: formGames,
+				filterOrigin: 'Formulario', // Establece el filtro de origen en 'Formulario'
 			};
 
 		default:
